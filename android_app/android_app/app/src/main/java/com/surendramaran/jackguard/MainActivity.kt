@@ -38,30 +38,13 @@ class MainActivity : AppCompatActivity(), Detector.DetectorListener {
     // ✅ Track if user already captured at least 1 photo
     private var hasAnyCapture: Boolean = false
 
-    private val labelDisplay = mapOf(
-        "Healthy_Jackfruit" to "Healthy Jackfruit",
-        "R10" to "Rhizopus Damage (R10)",
-        "R25" to "Rhizopus Damage (R25)",
-        "R50" to "Rhizopus Damage (R50)",
-        "R100" to "Rhizopus Damage (R100)"
-    )
+    private val labelDisplay = DamageAnalyzer.labelDisplay
 
-    private fun damagePercentFromLabel(label: String): Int = when (label) {
-        "Healthy_Jackfruit" -> 0
-        "R10" -> 10
-        "R25" -> 25
-        "R50" -> 50
-        "R100" -> 100
-        else -> 0
-    }
+    private fun damagePercentFromLabel(label: String): Int =
+        DamageAnalyzer.damagePercentFromLabel(label)
 
-    private fun bucketFromTotal(total: Int): String = when {
-        total >= 100 -> "R100"
-        total >= 50 -> "R50"
-        total >= 25 -> "R25"
-        total >= 10 -> "R10"
-        else -> "Healthy_Jackfruit"
-    }
+    private fun bucketFromTotal(total: Int): String =
+        DamageAnalyzer.bucketFromTotal(total)
 
     /** Camera capture (returns null if user cancels) */
     private val takePreviewLauncher =
@@ -295,7 +278,7 @@ class MainActivity : AppCompatActivity(), Detector.DetectorListener {
 
                     val bucketNow = bucketFromTotal((frontPercent ?: 0).coerceAtMost(100))
                     binding.buttonShowInfo.visibility =
-                        if (bucketNow == "R10" || bucketNow == "R25" || bucketNow == "R50") View.VISIBLE else View.GONE
+                        if (DamageAnalyzer.needsRecommendation(bucketNow)) View.VISIBLE else View.GONE
                 }
 
                 Side.BACK -> {
@@ -313,7 +296,7 @@ class MainActivity : AppCompatActivity(), Detector.DetectorListener {
 
                     val bucket = bucketFromTotal(clamped)
                     binding.buttonShowInfo.visibility =
-                        if (bucket == "R10" || bucket == "R25" || bucket == "R50") View.VISIBLE else View.GONE
+                        if (DamageAnalyzer.needsRecommendation(bucket)) View.VISIBLE else View.GONE
                 }
             }
 
@@ -321,12 +304,8 @@ class MainActivity : AppCompatActivity(), Detector.DetectorListener {
         }
     }
 
-    private fun computeTotalOrNull(): Int? {
-        val f = frontPercent
-        val b = backPercent
-        if (f == null || b == null) return null
-        return f + b
-    }
+    private fun computeTotalOrNull(): Int? =
+        DamageAnalyzer.computeTotal(frontPercent, backPercent)
 
     override fun onDestroy() {
         super.onDestroy()
