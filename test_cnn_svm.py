@@ -40,9 +40,9 @@ from cnn_svm_model import (
 
 RNG = np.random.default_rng(seed=0)
 
-def _random_image(h: int = 80, w: int = 80, colour: bool = False) -> np.ndarray:
+def _random_image(h: int = 80, w: int = 80, color: bool = False) -> np.ndarray:
     """Create a random uint8 image."""
-    if colour:
+    if color:
         return RNG.integers(0, 256, size=(h, w, 3), dtype=np.uint8)
     return RNG.integers(0, 256, size=(h, w), dtype=np.uint8)
 
@@ -104,15 +104,15 @@ class TestPreprocessImage(unittest.TestCase):
         self.assertGreaterEqual(float(out.min()), 0.0)
         self.assertLessEqual(float(out.max()), 1.0)
 
-    def test_colour_image_is_converted_to_grayscale(self):
-        """A colour (H, W, 3) input must produce a 2-D output."""
-        img = _random_image(colour=True)
+    def test_color_image_is_converted_to_grayscale(self):
+        """A color (H, W, 3) input must produce a 2-D output."""
+        img = _random_image(color=True)
         out = preprocess_image(img)
         self.assertEqual(out.ndim, 2)
 
     def test_already_grayscale_input_is_accepted(self):
         """A (H, W) input must not raise an error."""
-        img = _random_image(colour=False)
+        img = _random_image(color=False)
         out = preprocess_image(img)
         self.assertEqual(out.ndim, 2)
 
