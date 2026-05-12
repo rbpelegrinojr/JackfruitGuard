@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".DetailsViewActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Header -->
+        <TextView
+            android:id="@+id/header_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#4CAF50"
+            android:gravity="center"
+            android:padding="16dp"
+            android:text="JACKFRUIT TYPE DETAILS"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <!-- Top Row of Images -->
+        <LinearLayout
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/image1"
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                android:src="@drawable/jackfruit" />
+
+            <ImageView
+                android:id="@+id/image2"
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                android:src="@drawable/jackfruit" />
+
+            <ImageView
+                android:id="@+id/image3"
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_weight="1"
+                android:scaleType="centerCrop"
+                android:src="@drawable/jackfruit" />
+        </LinearLayout>
+
+        <!-- Pest Name -->
+        <TextView
+            android:id="@+id/pest_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Disease Name"
+            android:textColor="@android:color/white"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginTop="16dp"
+            android:padding="16dp"
+            android:background="#4CAF50" /> <!-- Set the background color -->
+
+        <!-- Scientific Name -->
+        <TextView
+            android:id="@+id/scientific_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:text="Scientific Name"
+            android:textColor="@android:color/darker_gray"
+            android:textSize="18sp"
+            android:layout_marginTop="8dp"
+            android:padding="8dp"
+            android:background="#E0E0E0" /> <!-- Optional background color for visibility -->
+
+        <!-- Additional Details -->
+        <TextView
+            android:id="@+id/additional_details"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Additional details about the pest go here. This can include information about its habitat, life cycle, and impact on crops or ecosystems."
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp"
+            android:padding="8dp"
+            android:background="#F5F5F5"/> <!-- Optional background color for visibility -->
+
+    </LinearLayout>
+</ScrollView>

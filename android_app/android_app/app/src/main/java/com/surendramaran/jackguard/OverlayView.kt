@@ -1,0 +1,116 @@
+package com.surendramaran.jackguard
+
+import android.content.Context
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.Paint
+import android.graphics.Rect
+import android.util.AttributeSet
+import android.view.View
+import androidx.core.content.ContextCompat
+
+class OverlayView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
+
+    private var results = listOf<BoundingBox>()
+    private var boxPaint = Paint()
+    private var textBackgroundPaint = Paint()
+    private var textPaint = Paint()
+
+    private var bounds = Rect()
+
+    init {
+        initPaints()
+    }
+
+    fun clear() {
+        results = emptyList() // Clear results
+        invalidate()          // Redraw the view
+    }
+
+    private fun initPaints() {
+        textBackgroundPaint.color = Color.BLACK
+        textBackgroundPaint.style = Paint.Style.FILL
+        textBackgroundPaint.textSize = 25f
+
+        textPaint.color = Color.WHITE
+        textPaint.style = Paint.Style.FILL
+        textPaint.textSize = 25f
+
+        boxPaint.color = ContextCompat.getColor(context!!, R.color.bounding_box_color)
+        boxPaint.strokeWidth = 8F
+        boxPaint.style = Paint.Style.STROKE
+    }
+
+    override fun draw(canvas: Canvas) {
+        super.draw(canvas)
+
+        results.forEach { boundingBox ->
+            val left = boundingBox.x1 * width
+            val top = boundingBox.y1 * height
+            val right = boundingBox.x2 * width
+            val bottom = boundingBox.y2 * height
+
+            // Prepare label with confidence score
+            val labelText = "${boundingBox.clsName} ${(boundingBox.cnf * 100).toInt()}%"
+
+            // Draw background for text
+            textBackgroundPaint.getTextBounds(labelText, 0, labelText.length, bounds)
+            val textWidth = bounds.width()
+            val textHeight = bounds.height()
+            canvas.drawRect(
+                left,
+                top,
+                left + textWidth + BOUNDING_RECT_TEXT_PADDING,
+                top + textHeight + BOUNDING_RECT_TEXT_PADDING,
+                textBackgroundPaint
+            )
+            // Draw text
+            canvas.drawText(labelText, left, top + bounds.height(), textPaint)
+        }
+    }
+
+
+//    override fun draw(canvas: Canvas) {
+//        super.draw(canvas)
+//
+//        results.forEach { boundingBox ->
+//
+//            val left = boundingBox.x1 * width
+//            val top = boundingBox.y1 * height
+//            val right = boundingBox.x2 * width
+//            val bottom = boundingBox.y2 * height
+//
+//            // Comment out the bounding box drawing logic to hide it
+//            /*
+//            // Draw bounding box
+//            canvas.drawRect(left, top, right, bottom, boxPaint)
+//            */
+//
+//            // Prepare label with confidence score
+//            val labelText = "${boundingBox.clsName} ${(boundingBox.cnf * 100).toInt()}%"
+//
+//            // Draw background for text
+//            textBackgroundPaint.getTextBounds(labelText, 0, labelText.length, bounds)
+//            val textWidth = bounds.width()
+//            val textHeight = bounds.height()
+//            canvas.drawRect(
+//                left,
+//                top,
+//                left + textWidth + BOUNDING_RECT_TEXT_PADDING,
+//                top + textHeight + BOUNDING_RECT_TEXT_PADDING,
+//                textBackgroundPaint
+//            )
+//            // Draw text
+//            canvas.drawText(labelText, left, top + bounds.height(), textPaint)
+//        }
+//    }
+
+    fun setResults(boundingBoxes: List<BoundingBox>) {
+        results = boundingBoxes
+        invalidate()
+    }
+
+    companion object {
+        private const val BOUNDING_RECT_TEXT_PADDING = 8
+    }
+}

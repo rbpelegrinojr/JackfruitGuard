@@ -1,0 +1,5 @@
+Healthy_Jackfruit
+R10
+R25
+R50
+R100

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#CEFAE0"
+    tools:context=".SplashScreenActivity">
+
+    <!-- Logo ImageView -->
+    <ImageView
+        android:id="@+id/logoImageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="App Logo"
+        android:scaleType="fitXY"
+        android:src="@drawable/sl"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!-- App Name TextView -->
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/aclonica"
+        android:gravity="center"
+        android:text="JACK-GUARD"
+        android:textColor="#0B1B8C"
+        android:textSize="35sp"
+        android:visibility="gone"
+        android:textStyle="bold"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/progressBar" />
+    <!-- ProgressBar -->
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="240dp"
+        android:layout_height="30dp"
+        android:max="100"
+        android:progress="0"
+        android:visibility="gone"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/logoImageView"
+        android:layout_marginTop="24dp"
+        android:background="@android:color/transparent"
+        android:indeterminate="false" />
+
+    <!-- Progress Bar Border -->
+<!--    <View-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="4dp"-->
+<!--        android:background="@android:color/black"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/progressBar"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/progressBar"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/progressBar" />-->
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
